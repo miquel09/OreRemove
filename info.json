@@ -1,0 +1,11 @@
+{
+    "name": "RemoveOre",
+    "version": "0.1.1",
+    "title": "Remove Ore",
+    "author": "You",
+    "contact": "",
+    "homepage": "",
+    "factorio_version": "0.17",
+    "dependencies": ["base >= 0.17"],
+    "description": "This is a mod that removes ore patches when paths are laid on it"
+}
