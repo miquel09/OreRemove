@@ -1,12 +1,29 @@
 --control.lua
 
+local function starts_with(str, start)
+    return str:sub(1, #start) == start
+ end
+
 function removeTile(e)
-    for index, tile in pairs(e.tiles) do
-        local entities = game.surfaces["nauvis"].find_entities({{tile.position.x, tile.position.y}, {tile.position.x + 1, tile.position.y + 1}})
+    -- Get the settings
+    local setting = settings.global["RO-behaviour"].value
+
+    -- Remove the resource if the setting is on
+    if setting ~= "off" then
+        for index, tile in pairs(e.tiles) do
+            -- Get the entities in the current area
+            local entities = game.surfaces["nauvis"].find_entities({{tile.position.x, tile.position.y}, {tile.position.x + 1, tile.position.y + 1}})
         
-        for index, entity in pairs(entities) do
-            if(entity.type == "resource") then
-                entity.destroy()
+            for index, entity in pairs(entities) do
+                if entity.type == "resource" then
+                    if setting == "all" then
+                        entity.destroy()
+                    else 
+                        if setting == "infinite only" and starts_with(entity.name, "infinite") then
+                            entity.destroy()
+                        end
+                    end
+                end
             end
         end
     end
